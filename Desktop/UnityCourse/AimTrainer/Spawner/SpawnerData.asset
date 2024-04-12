@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09fb281dc5818c74eb0939a8669687ff, type: 3}
+  m_Name: SpawnerData
+  m_EditorClassIdentifier: 
+  prefabList:
+  - {fileID: 3765254605393723314, guid: e338621ed2f1e7146ace386cd4da1b34, type: 3}
+  prefabTransform:
+  - {fileID: 1804046918048081700, guid: f31b97c83701e0348b65f3a32d5e3c6f, type: 3}
+  - {fileID: 1986127272208724883, guid: f93eb6720c8c8344cb4b34c814cc3465, type: 3}
+  - {fileID: 7602990295654299648, guid: c5d7ae1e4835d3c4a82300b0547f8712, type: 3}
+  - {fileID: 495838861924641011, guid: 940583531982e93478605c4bfefe3a20, type: 3}
+  playerObject: {fileID: 6201013301879460352, guid: 0f15b57503aafca49a0640916f1f1045, type: 3}
+  maxPrefab: 6
+  prefabsInRealTime: 5
+  time: 4
