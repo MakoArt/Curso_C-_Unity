@@ -1,0 +1,45 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class CameraController : MonoBehaviour
+{
+    public InputAction RotateInput;
+
+    [SerializeField] float xRot = 0;
+    [SerializeField] float mouseSensibility = 100;
+    [SerializeField] Transform player;
+    [SerializeField] float clampX; 
+    [SerializeField] float clampY;  
+
+
+    private void OnEnable()
+    {
+        RotateInput.Enable();
+    }
+    void Update()
+    {
+        //float mouseX = Input.GetAxis("Mouse X"); /** mouseSensibility * Time.deltaTime;*/
+
+        //MIRADA VERTICAL 
+       //float mouseY = Input.GetAxis("Mouse Y"); /** mouseSensibility * Time.deltaTime;*/ 
+
+        Vector2 mouseX = RotateInput.ReadValue<Vector2>();
+        Vector2 mouseY = RotateInput.ReadValue<Vector2>();
+
+        xRot -= mouseY.y;
+        xRot = Mathf.Clamp(xRot, clampX,clampY);
+       // transform.localRotation = Quaternion.Euler(xRot, 0f, 0f);
+        //**********************************************
+        player.Rotate((Vector3.up * mouseX.x) * mouseSensibility * Time.deltaTime);
+
+
+
+    }
+
+    private void OnDisable()
+    {
+        RotateInput.Disable();
+    }
+}
