@@ -1,0 +1,97 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class PlayerController : MonoBehaviour
+{
+
+    public InputAction MoveInput;
+    public InputAction Jump;
+    public InputAction KeyboardMove;
+
+    [SerializeField] CharacterController characterController;
+    [SerializeField] Transform groundCheck;
+    [SerializeField] LayerMask layerMaskGround;
+    [SerializeField] float speed = 4f;
+    [SerializeField] float jumpForce = 4;
+    [SerializeField] float gravity = -20f;
+    [SerializeField] float distanceGround = 0.5f;
+  
+
+    Vector3 vel;
+    bool isGrounded;
+
+
+    private void OnEnable()
+    {
+        MoveInput.Enable();
+       
+        Jump.Enable();
+        KeyboardMove.Enable();
+    }
+
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+
+    void Update()
+    {
+        isGrounded = Physics.CheckSphere(groundCheck.position, distanceGround, layerMaskGround);
+
+        if (isGrounded && vel.y < 0)
+        {
+            vel.y = -2;
+        }
+
+        //float x = Input.GetAxis("Horizontal");
+        //float z = Input.GetAxis("Vertical");
+
+        //Vector2 viene del input y sustituye a los axis 
+        Vector2 movement = MoveInput.ReadValue<Vector2>();
+        Vector2 moveKeyboard = KeyboardMove.ReadValue<Vector2>();
+
+        Vector3 move = transform.right * movement.x + transform.forward *  movement.y;
+        Vector3 moveKey = transform.right * moveKeyboard.x + transform.forward * moveKeyboard.y;
+
+
+        characterController.Move(move * speed * Time.deltaTime);
+        characterController.Move(moveKey * speed * Time.deltaTime);
+
+
+        //GRAVITY
+        vel.y += gravity * Time.deltaTime;
+        characterController.Move(vel * Time.deltaTime);
+
+
+        //SALTO ANIMATION
+        //if (Input.GetButtonDown("Jump") && isGrounded)
+        //{
+        //    vel.y = Mathf.Sqrt(jumpForce * -2 * gravity);
+        //    isGrounded = false;
+
+
+        //}
+
+        if (Jump.WasPressedThisFrame())
+        {
+            vel.y = Mathf.Sqrt(jumpForce * -2 * gravity);
+            isGrounded = false;
+        }
+
+    }
+
+    private void OnDisable()
+    {
+
+        MoveInput.Disable();
+      
+        Jump.Disable();
+        KeyboardMove.Disable();
+
+    }
+
+}
